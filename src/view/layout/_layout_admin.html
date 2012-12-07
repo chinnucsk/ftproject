@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8"/>
+    {% block title %}
+    <title></title>
+    {% endblock %}
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/flexible-grids2.css" type="text/css"/>
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <script type="text/javascript" src="/static/js/jquery.min.js"></script>
+</head>
+<body>
+<div id="main_header">
+    {% block header %}
+    <header>
+        <div class="ym-wrapper">
+            <div class="ym-wbox">
+                <a href="/"><h1>FT Project Home.</h1></a>
+                <h4 class="ym-label">Веб-разработка на Erlang.</h4>
+            </div>
+        </div>
+    </header>
+    {% endblock %}
+</div>
+<div id="main_content">
+    <div id="main_center">
+        <div class="ym-wrapper">
+            <div class="ym-wbox">
+                <div class="ym-grid linearize-level-1">
+                <div class="ym-g25 ym-gl ym-clearfix">
+                    <nav class="ym-vlist">
+                        <h6 class="ym-vtitle">Опции</h6>
+                        <ul>
+                            {% block menu %}
+                            {% endblock%}
+                        </ul>
+                    </nav>
+                </div>
+
+                    <div class="ym-g75 ym-gr content ym-clearfix">
+                        <div class="ym-gbox-right">
+                            {% block center %} {% endblock %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+</div>
+<div id="main_footer">
+    {% include "layout/_footer.html" %}
+</div>
+{% include "layout/_counter.html" %}
+</body>
+</html>

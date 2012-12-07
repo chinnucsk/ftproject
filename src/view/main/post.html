@@ -1,0 +1,14 @@
+{% extends "layout/_layout.html" %}
+{% block title %}<title>FT Project</title> {% endblock%}
+{% block menu %}
+<li class="active"><a href="/"><strong>Новости</strong></a></li>
+<li><a href="#">О проекте</a></li>
+{% endblock %}
+{% block center %}
+<div class="box info">
+    <p><a href="/main/post/{{post.hru}}"><strong>{{ post.post_title|upper }}</strong></a>
+        <span class="ym-label">{{post.post_date_time|date:"H:i:s d/m/Y" }}</span></p>
+    <p class="box"> {{ post.post_body }}</p>
+    {% tags_by_post postnum=post.id  %}
+</div>
+{% endblock %}

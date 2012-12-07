@@ -1,0 +1,5 @@
+*.iml
+Mnesia*
+.idea
+ebin
+log

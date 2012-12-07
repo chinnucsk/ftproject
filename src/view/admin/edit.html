@@ -1,0 +1,43 @@
+{% extends "layout/_layout_admin.html" %}
+{% block title %}<title>Админка</title> {% endblock%}
+{% block menu %}
+<li><span>Записи</span>
+    <ul>
+        <li class="active"><strong>Список</strong></li>
+        <li><a href="/admin/newpost">Новая запись</a></li>
+    </ul>
+<li><span>Ссылки</span>
+    <ul>
+        <li><a href="/admin/links">Список</a></li>
+        <li><a href="/admin/newlink">Новая ссылка</a></li>
+    </ul>
+<li><span>Тэги</span>
+    <ul>
+        <li><a href="/admin/tegs">Список</a></li>
+        <li><a href="/admin/newtag">Новый тэг</a></li>
+    </ul>
+{% endblock %}
+{% block center %}
+<h6 class="ym-fbox-heading">Отредактируйте необходимые поля записи</h6>
+<div class="ym-fbox-text">
+<form method="POST" class="ym-form ym-full">
+    {% if errors %}<p class="box error">{{errors}}</p>
+    {% endif %}
+    <label for="title">Название записи<sup class="ym-required">*</sup></label>
+    <input id="title" type="text" name="title" value="{{post.post_title}}"> <br/>
+    <label for="hru">ЧПУ<sup class="ym-required">*</sup></label>
+    <input id="hru" type="text" name="hru" value="{{post.hru}}">   <br/>
+    <label for="body">Текст записи<sup class="ym-required">*</sup></label>
+    <textarea id="body" name="body" cols="30" rows="7">{{post.post_body}}</textarea><br/>
+    {% if tags %}
+    <div class="ym-fbox-check">
+        {% for tag in tags %}
+        <input type="checkbox" name="{{tag.id}}"{% if (tag.stat=="yes") %} checked {% endif %}id="{{tag.tag_name}}" />
+        <label for="{{tag.tag_name}}">{{tag.tag_name}}</label>
+        {% endfor %}
+    </div>
+    {% endif %}
+    <input type="submit">
+</form>
+</div>
+{% endblock %}

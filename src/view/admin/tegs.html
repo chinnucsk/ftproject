@@ -1,0 +1,33 @@
+{% extends "layout/_layout_admin.html" %}
+{% block title %}<title>Админка</title> {% endblock%}
+{% block menu %}
+<li><span>Записи</span>
+    <ul>
+        <li><a href="/admin/">Список</a></li>
+        <li><a href="/admin/newpost">Новая запись</a></li>
+    </ul>
+<li><span>Ссылки</span>
+    <ul>
+        <li><a href="/admin/links">Список</a></li>
+        <li><a href="/admin/newlink">Новая ссылка</a></li>
+    </ul>
+<li><span>Тэги</span>
+    <ul>
+        <li class="active"><strong>Список</strong></li>
+        <li><a href="/admin/newtag">Новый тэг</a></li>
+    </ul>
+
+    {% endblock %}
+{% block center %}
+    <table class="bordertable narrow">
+        <thead><tr><th>Тэг</th><th>Связанные записи</th><th>Удалить</th></tr></thead>
+        <tbody>
+        {% for tag in tags %}
+        <tr><td>{{tag.tag_name}}</td>
+            <td></td>
+            <td><a href="/admin/tagdelete/{{tag.id}}">Удалить</a></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

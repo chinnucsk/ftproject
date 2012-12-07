@@ -1,0 +1,33 @@
+{% extends "layout/_layout_admin.html" %}
+{% block title %}<title>Админка</title> {% endblock%}
+{% block menu %}
+<li><span>Записи</span>
+    <ul>
+        <li><a href="/admin/">Список</a></li>
+        <li><a href="/admin/newpost">Новая запись</a></li>
+    </ul>
+<li><span>Ссылки</span>
+    <ul>
+        <li class="active"><strong>Список</strong></li>
+        <li><a href="/admin/newlink">Новая ссылка</a></li>
+    </ul>
+<li><span>Тэги</span>
+    <ul>
+        <li><a href="/admin/tegs">Список</a></li>
+        <li><a href="/admin/newtag">Новый тэг</a></li>
+    </ul>
+{% endblock %}
+{% block center %}
+<h6 class="ym-fbox-heading">Отредактируйте ссылку</h6>
+<div class="ym-fbox-text">
+    <form method="POST" class="ym-form ym-full">
+        {% if errors %}<p class="box error">{{errors}}</p>
+        {% endif %}
+        <label for="name">Название ссылки<sup class="ym-required">*</sup></label>
+        <input id="name" type="text" name="name" value="{{link.name}}"> <br/>
+        <label for="url">Адрес ссылки<sup class="ym-required">*</sup></label>
+        <input id="url" type="text" name="url" value="{{link.url}}">   <br/>
+        <input type="submit">
+    </form>
+</div>
+{% endblock %}

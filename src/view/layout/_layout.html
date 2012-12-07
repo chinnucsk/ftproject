@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8"/>
+    {% block title %}
+    <title></title>
+    {% endblock %}
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/flexible-grids.css" type="text/css"/>
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <script type="text/javascript" src="/static/js/jquery.min.js"></script>
+</head>
+<body>
+<div id="main_header">
+    {% block header %}
+    <header>
+        <div class="ym-wrapper">
+            <div class="ym-wbox">
+                <a href="/"><h1>FT Project Home.</h1></a>
+                <h4 class="ym-label">Веб-разработка на Erlang.</h4>
+            </div>
+        </div>
+    </header>
+    {% endblock %}
+</div>
+<div id="main_content">
+    <div id="main-menu">
+        <nav id="nav">
+            <div class="ym-wrapper">
+                <div class="ym-hlist">
+                    <ul>
+                        {% block menu %}
+                        {% endblock %}
+                    </ul>
+                    <form class="ym-searchform">
+                        <input class="ym-searchfield" type="search" placeholder="Поиск..."/>
+                        <input class="ym-searchbutton" type="submit" value="Поиск"/>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div id="main_center">
+        <div class="ym-wrapper">
+            <div class="ym-wbox">
+                <div class="ym-grid linearize-level-1">
+                    <div class="ym-g75 ym-gl content ym-clearfix">
+                        <div class="ym-gbox">
+                            {% block center %} {% endblock %}
+                        </div>
+                    </div>
+                    <div class="ym-g25 ym-gr ym-clearfix">
+                        <div class="ym-gbox-right">
+                             <div id="links"  class="box info">
+                             <h5 class="ym-label">Ссылки</h5>
+                             <ul>
+                             {% links %}
+                             </ul>
+                             </div>
+                            <div id="tags"  class="box info">
+                                <h5 class="ym-label">Тэги</h5>
+                                <ul>
+                                {% tags_list %}
+                                </ul>
+                            </div>
+                            <div id="login" class="box info">
+                                <ul>
+                                    <li><a href="/admin">Админка</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+<div id="main_footer">
+    {% include "layout/_footer.html" %}
+</div>
+{% include "layout/_counter.html" %}
+</body>
+</html>

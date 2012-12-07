@@ -1,0 +1,4 @@
+-module(posttags,[Id,PostsId,TagsId]).
+-compile(export_all).
+-belongs_to(posts).
+-belongs_to(tags).
