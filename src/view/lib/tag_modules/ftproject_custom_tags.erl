@@ -14,7 +14,11 @@ links(Variables,Option)->
 lists:flatten(["<li><a href='"++Y++"' target='_blank' >"++X++"</a></li>"||{_,_,X,Y}<-boss_db:find(links,[])]).
 
 tags_list(Variables,Option) ->
-  lists:flatten(["<li><a href='/main/tags/"++X++"' >"++X++"</a></li>"||{_,_,X,_}<-boss_db:find(tags,[])]).
+  F = fun(X)->
+    boss_db:count(posttags,[tags_id,'equals',X])
+    end,
+  lists:flatten(["<li><a href='/main/tags/"++X++"' >"++X++"("++integer_to_list(F(Y))++")</a></li>"
+    ||{_,Y,X,_}<-boss_db:find(tags,[])]).
 
 tags_by_post(Variables,Option)->
   PostN = proplists:get_value(postnum,Variables),
@@ -27,6 +31,18 @@ tags_by_post(Variables,Option)->
   end,
   Tags =[{X,F(X)}||{_,_,_,X}<-TagsL],
   lists:flatten(["<a href='/main/tags/"++Y++"'>"++Y++"</a>  "||{_,Y}<-Tags]).
+posts_by_tag(Variables,Option) ->
+  TagN= proplists:get_value(tagnum,Variables),
+  PostL = boss_db:find(posttags,[tags_id,'equals',TagN]),
+  F = fun(X) ->
+      case boss_db:find(X) of
+        {_,_,Y,_,_,_} -> Y;
+        undefined -> ":("
+      end
+     end,
+   Posts =[{X,F(X)}||{_,_,X,_}<-PostL],
+  %%TODO:перевести ссылки в числа
+   lists:flatten(["<a href='/main/post/"++Y++"'>"++Y++"</a>  "||{_,Y}<-Posts]).
 
 newcommentsall(Variables,Option) ->
   integer_to_list(boss_db:count(comments,[ap,'equals',0])).
