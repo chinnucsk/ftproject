@@ -16,6 +16,12 @@
             <li><a href="/admin/tegs">Список</a></li>
             <li><a href="/admin/newtag">Новый тэг</a></li>
         </ul>
+<li><span>Комментарии</span>
+    <ul>
+        <li><a href="/admin/comnew">Новые({% newcommentsall%})</a></li>
+        <li><a href="/admin/coms">Все</a></li>
+    </ul>
+
 {% endblock %}
 {% block center %}
 <table class="bordertable narrow">
@@ -23,7 +29,7 @@
   <tbody>
   {% for post in posts %}
   <tr><td><a href="/main/post/{{post.hru}}"><strong>{{post.post_title}}</strong></a></td>
-      <td>{{post.post_date_time|date:"H:i:s d/m/Y" }}</td><td></td>
+      <td>{{post.post_date_time|date:"H:i:s d/m/Y" }}</td><td>{% comments_by_post postnum=post.id %}</td>
       <td><a href="/admin/edit/{{post.hru}}">Правка</a></td>
       <td><a href="/admin/delete/{{post.hru}}">Удалить</a></td>
   </tr>

@@ -16,12 +16,18 @@
         <li><a href="/admin/tegs">Список</a></li>
         <li><a href="/admin/newtag">Новый тэг</a></li>
     </ul>
+<li><span>Комментарии</span>
+    <ul>
+        <li><a href="/admin/comnew">Новые({% newcommentsall%})</a></li>
+        <li><a href="/admin/coms">Все</a></li>
+    </ul>
 {% endblock %}
 {% block center %}
 <h6 class="ym-fbox-heading">Отредактируйте необходимые поля записи</h6>
 <div class="ym-fbox-text">
 <form method="POST" class="ym-form ym-full">
-    {% if errors %}<p class="box error">{{errors}}</p>
+    {% if errors %}<div class="ym-fbox-text ym-error">
+    <p class="ym-message">{{errors}}</p></div>
     {% endif %}
     <label for="title">Название записи<sup class="ym-required">*</sup></label>
     <input id="title" type="text" name="title" value="{{post.post_title}}"> <br/>

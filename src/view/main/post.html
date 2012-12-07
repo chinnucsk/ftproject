@@ -9,18 +9,48 @@
     <p><a href="/main/post/{{post.hru}}"><strong>{{ post.post_title|upper }}</strong></a>
         <span class="ym-label">{{post.post_date_time|date:"H:i:s d/m/Y" }}</span></p>
     <p class="box"> {{ post.post_body }}</p>
-    {% tags_by_post postnum=post.id  %}
+    {% tags_by_post postnum=post.id  %}   <a id="commbutton" class="ym-button ym-next" >Показать комментарии</a>
 </div>
 <div id="commentbox" class="box">
     <h5>Добавить комментарий</h5>
-    <form class="ym-form">
+    <form method="post" class="ym-form">
+        {% if errors %}
+        <div class="ym-fbox-text ym-error">
+            <p class="ym-message">{{errors}}</p></div>
+        {%endif%}
         <label for="author">Ваше имя<sup class="ym-required">*</sup></label>
-        <input type="text" id="author">
+        <input type="text" id="author" name="author" maxlength=20 {%if author%} value={{author}}{%endif%} >
         <label for="email">Ваша электронная почта<sup class="ym-required">*</sup></label>
-        <input type="text" id="email">
+        <input type="text" id="email" name="email" maxlength=50 {% if email %} value={{email}}{%endif%}>
         <label for="body">Текст комментария<sup class="ym-required">*</sup></label>
-        <textarea id="body" name="body" cols="30" rows="7"></textarea>
+        <textarea id="body" name="body" cols="30" rows="7" maxlength=500>{%if body %}{{body}}{%endif%}</textarea>
         <input type="submit">
     </form>
 </div>
+<div id="comments">
+{% if comms %}
+    {% for comm in comms %}
+<div class="box info">
+    <p><a href="mailto:{{comm.email}}"><strong>{{ comm.author|upper }}</strong></a>
+        <span class="ym-label">{{comm.comment_time|date:"H:i:s d/m/Y" }}</span></p>
+    <p class="box"> {{ comm.body }}</p>
+</div>
+    {%endfor%}
+{%endif%}
+</div>
+<script>
+    $(document).ready(function(){
+        $("#comments").hide();
+        $("#commbutton").toggle(function(){
+            $("#comments").show();
+            $("#commentbox").hide();
+            $(this).text("Добавить комментарий");
+            return false
+        },function(){
+            $("#comments").hide();
+            $("#commentbox").show();
+            $(this).text("Показать комментарии");
+        });
+    })
+</script>
 {% endblock %}

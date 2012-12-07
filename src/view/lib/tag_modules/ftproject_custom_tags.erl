@@ -27,3 +27,17 @@ tags_by_post(Variables,Option)->
   end,
   Tags =[{X,F(X)}||{_,_,_,X}<-TagsL],
   lists:flatten(["<a href='/main/tags/"++Y++"'>"++Y++"</a>  "||{_,Y}<-Tags]).
+
+newcommentsall(Variables,Option) ->
+  integer_to_list(boss_db:count(comments,[ap,'equals',0])).
+
+comments_by_post(Variables,Option) ->
+  PostN = proplists:get_value(postnum,Variables),
+   binary:bin_to_list(unicode:characters_to_binary("<a href='/admin/coms/"))++
+   unicode:characters_to_list(PostN)++
+   binary:bin_to_list(unicode:characters_to_binary("'>Всего</a>("))++
+   integer_to_list(boss_db:count(comments,[posts_id,'equals',PostN]))++
+   unicode:characters_to_list("),")++
+   binary:bin_to_list(unicode:characters_to_binary("<a href='/admin/comnew/'>новых</a>(<strong>"))++
+   integer_to_list(boss_db:count(comments,[{posts_id,'equals',PostN},{ap,'equals',0}]))++
+   unicode:characters_to_list("</strong>)").
