@@ -151,3 +151,6 @@ tagdelete('GET', [Id]) ->
       boss_db:delete(Tag:id()),
       {redirect, "/admin/tegs"}
   end.
+comnew('GET',[])->
+  Coms = boss_db:find(comments,[ar,'equals',0]),
+  {ok,[{coms,Coms}]}.

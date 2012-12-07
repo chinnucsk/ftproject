@@ -1,0 +1,42 @@
+{% extends "layout/_layout_admin.html" %}
+{% block title %}<title>Админка</title> {% endblock%}
+{% block menu %}
+<li><span>Записи</span>
+    <ul>
+        <li><a href="/admin/">Список</a></li>
+        <li><a href="/admin/newpost">Новая запись</a></li>
+    </ul>
+<li><span>Ссылки</span>
+    <ul>
+        <li><a href="/admin/links">Список</a></li>
+        <li><a href="/admin/newlink">Новая ссылка</a></li>
+    </ul>
+<li><span>Тэги</span>
+    <ul>
+        <li><a href="/admin/tegs">Список</a></li>
+        <li><a href="/admin/newtag">Новый тэг</a></li>
+    </ul>
+<li><span>Комментарии</span>
+    <ul>
+        <li class="active"><strong>Новые({% newcommentsall%})</strong></li>
+        <li><a href="/admin/coms">Все</a></li>
+    </ul>
+
+    {% endblock %}
+    {% block center %}
+    <h5>Неподтвержденные комментарии</h5>
+    <table class="bordertable narrow">
+        <thead><tr><th>Запись</th><th>Автор</th><th>Комментарий</th><th>Дата создания</th><th>Утвердить</th><th>Удалить</th></tr></thead>
+        <tbody>
+        {% for com in coms %}
+        <tr><td><a href="/main/post/{{com.posts.hru}}"><strong>Смотреть</strong></a></td>
+            <td><a href="mail:{{com.email}}">{{com.author}}</a></td>
+            <td><a href="/coms/{{com.id}}">{{com.body|truncatewords:10}}</a></td>
+            <td>{{com.comment_time|date:"H:i:s d/m/Y" }}</td>
+            <td><a href="/admin/comap/{{com.id}}">Утвердить</a></td>
+            <td><a href="/admin/comdelete/{{com.id}}">Удалить</a></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endblock %}
