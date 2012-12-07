@@ -11,4 +11,16 @@
     <p class="box"> {{ post.post_body }}</p>
     {% tags_by_post postnum=post.id  %}
 </div>
+<div id="commentbox" class="box">
+    <h5>Добавить комментарий</h5>
+    <form class="ym-form">
+        <label for="author">Ваше имя<sup class="ym-required">*</sup></label>
+        <input type="text" id="author">
+        <label for="email">Ваша электронная почта<sup class="ym-required">*</sup></label>
+        <input type="text" id="email">
+        <label for="body">Текст комментария<sup class="ym-required">*</sup></label>
+        <textarea id="body" name="body" cols="30" rows="7"></textarea>
+        <input type="submit">
+    </form>
+</div>
 {% endblock %}
