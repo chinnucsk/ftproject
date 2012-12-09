@@ -11,7 +11,7 @@
             <p><a href="/main/post/{{post.hru}}"><strong>{{ post.post_title|upper }}</strong></a>
             <span class="ym-label">{{post.post_date_time|date:"H:i:s d/m/Y" }}</span></p>
         <p class="box"> {{ post.post_body }}</p>
-        {% tags_by_post postnum=post.id  %}
+        {% tags_by_post postnum=post.id  %} {% comments_by_post_main postnum=post.id%}
         </div>
         {% endfor %}
         {% else %}

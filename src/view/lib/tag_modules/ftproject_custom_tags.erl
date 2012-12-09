@@ -41,19 +41,21 @@ posts_by_tag(Variables,Option) ->
       end
      end,
    Posts =[{X,F(X)}||{_,_,X,_}<-PostL],
-  %%TODO:перевести ссылки в числа
-   lists:flatten(["<a href='/main/post/"++Y++"'>"++Y++"</a>  "||{_,Y}<-Posts]).
+   NumPosts = lists:zip(Posts, lists:seq(1, length(Posts))),
+   lists:flatten(["<a href='/main/post/"++Y++"'>"++integer_to_list(Num)++"</a>  "||{{_,Y}, Num} <- NumPosts]).
 
 newcommentsall(Variables,Option) ->
   integer_to_list(boss_db:count(comments,[ap,'equals',0])).
 
 comments_by_post(Variables,Option) ->
   PostN = proplists:get_value(postnum,Variables),
-   binary:bin_to_list(unicode:characters_to_binary("<a href='/admin/coms/"))++
-   unicode:characters_to_list(PostN)++
-   binary:bin_to_list(unicode:characters_to_binary("'>Всего</a>("))++
+   binary:bin_to_list(unicode:characters_to_binary("<a href='/admin/coms/'>Всего</a>("))++
    integer_to_list(boss_db:count(comments,[posts_id,'equals',PostN]))++
    unicode:characters_to_list("),")++
    binary:bin_to_list(unicode:characters_to_binary("<a href='/admin/comnew/'>новых</a>(<strong>"))++
    integer_to_list(boss_db:count(comments,[{posts_id,'equals',PostN},{ap,'equals',0}]))++
    unicode:characters_to_list("</strong>)").
+ comments_by_post_main(Variables,Option) ->
+   PostN = proplists:get_value(postnum,Variables),
+   binary:bin_to_list(unicode:characters_to_binary("Комментарии: "))++
+   integer_to_list(boss_db:count(comments,[posts_id,'equals',PostN])).

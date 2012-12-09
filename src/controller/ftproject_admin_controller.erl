@@ -1,4 +1,4 @@
--module(ftproject_admin_controller, [Req]).
+-module(ftproject_admin_controller, [Req,SessionID]).
 -compile(export_all).
 
 index('GET', []) ->
@@ -152,5 +152,41 @@ tagdelete('GET', [Id]) ->
       {redirect, "/admin/tegs"}
   end.
 comnew('GET',[])->
-  Coms = boss_db:find(comments,[ar,'equals',0]),
+  Coms = boss_db:find(comments,[ap,'equals',0]),
   {ok,[{coms,Coms}]}.
+comap('GET',[]) ->
+  {redirect,"/admin/comnew"};
+comap('GET',[Id]) ->
+  Com = boss_db:find_first(comments,[id,'equals',http_uri:decode(Id)]),
+  case Com of
+    []->{redirect,"/admin/coms"};
+    _ -> Newcom = Com:set([{ap,1}]),
+          case Newcom:save() of
+            {ok,_} -> {redirect,"/admin/coms"};
+            {error,_} -> {redirect,"/admin/comnew"}
+          end
+  end.
+
+coms('GET',[]) ->
+  Coms = boss_db:find(comments,[]),
+  {ok,[{coms,Coms}]}.
+
+comview('GET',[]) ->
+  {redirect,"/admin/coms"};
+comview('GET',[Id]) ->
+  Com = boss_db:find_first(comments,[id,'equals',http_uri:decode(Id)]),
+  Backlink = Req:header(referer),
+ % io:format("~w",Com),
+  case Com of
+    [] -> {redirect,"/admin/coms"};
+    _ -> {ok,[{com,Com},{back,Backlink}]}
+  end.
+comdelete('GET',[])->
+  {redirect,"/admin/coms"};
+comdelete('GET',[Id]) ->
+  Com = boss_db:find_first(comments,[id,'equals',http_uri:decode(Id)]),
+  case Com of
+    undefined -> {redirect, "/admin/coms"};
+    _ -> boss_db:delete(Com:id()),
+      {redirect, "/admin/coms"}
+  end.

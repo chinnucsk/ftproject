@@ -18,22 +18,22 @@
     </ul>
 <li><span>Комментарии</span>
     <ul>
-        <li class="active"><strong>Новые({% newcommentsall%})</strong></li>
-        <li><a href="/admin/coms">Все</a></li>
+        <li><a href="/admin/comnew">Новые({% newcommentsall%})</a></li>
+        <li class="active"><strong>Все</strong></li>
     </ul>
 
     {% endblock %}
     {% block center %}
-    <h5>Неподтвержденные комментарии</h5>
+    <h5>Все комментарии</h5>
     <table class="bordertable narrow">
-        <thead><tr><th>Запись</th><th>Автор</th><th>Комментарий</th><th>Дата создания</th><th>Утвердить</th><th>Удалить</th></tr></thead>
+        <thead><tr><th>Запись</th><th>Автор</th><th>Комментарий</th><th>Дата создания</th><th>Статус</th><th>Удалить</th></tr></thead>
         <tbody>
         {% for com in coms %}
         <tr><td><a href="/main/post/{{com.posts.hru}}"><strong>{{com.posts.hru}}</strong></a></td>
             <td><a href="mail:{{com.email}}">{{com.author}}</a></td>
             <td><a href="/admin/comview/{{com.id}}">{{com.body|truncatewords:10}}</a></td>
             <td>{{com.comment_time|date:"H:i:s d/m/Y" }}</td>
-            <td><a href="/admin/comap/{{com.id}}">Утвердить</a></td>
+            <td>{% if com.ap==1%}Утвержден{% else%}Новый{% endif%}</td>
             <td><a href="/admin/comdelete/{{com.id}}">Удалить</a></td>
         </tr>
         {% endfor %}

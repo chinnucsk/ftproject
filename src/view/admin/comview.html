@@ -1,0 +1,36 @@
+{% extends "layout/_layout_admin.html" %}
+{% block title %}<title>Админка</title> {% endblock%}
+{% block menu %}
+<li><span>Записи</span>
+    <ul>
+        <li><a href="/admin/">Список</a></li>
+        <li><a href="/admin/newpost">Новая запись</a></li>
+    </ul>
+<li><span>Ссылки</span>
+    <ul>
+        <li><a href="/admin/links">Список</a></li>
+        <li><a href="/admin/newlink">Новая ссылка</a></li>
+    </ul>
+<li><span>Тэги</span>
+    <ul>
+        <li><a href="/admin/tegs">Список</a></li>
+        <li><a href="/admin/newtag">Новый тэг</a></li>
+    </ul>
+<li><span>Комментарии</span>
+    <ul>
+        <li><a href="/admin/comnew">Новые({% newcommentsall%})</a></li>
+        <li class="active"><strong>Все</strong></li>
+    </ul>
+
+    {% endblock %}
+    {% block center %}
+    <h5>Комментарий</h5>
+    {% if com %}
+    <div class="box info">
+        <p><a href="mailto:{{com.email}}">{{com.author}}</a>
+        <span class="ym-label">{{com.comment_time|date:"H:i:s d/m/Y" }}</span></p>
+        <p class="box"> {{ com.body }}</p>
+    </div>
+    {% endif %}
+    <a href="{{back}}"  class="ym-button ym-next">Назад</a>
+    {% endblock %}
